@@ -900,10 +900,10 @@ int ext4_fs_alloc_inode(struct ext4_fs *fs, struct ext4_inode_ref *inode_ref,
 	} else {
 		/*
 		 * Default file permissions to be compatible with other systems
-		 * 0666 (octal) == rw-rw-rw-
+		 * 0777 (octal) == rwxrwxrwx
 		 */
 
-		mode = 0666;
+		mode = 0777;
 		mode |= ext4_fs_correspond_inode_mode(filetype);
 	}
 	ext4_inode_set_mode(&fs->sb, inode, mode);

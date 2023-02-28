@@ -47,6 +47,7 @@ extern "C" {
 
 /*****************************************************************************/
 
+#define F_SET_EXT2_V0 1
 #define F_SET_EXT2 2
 #define F_SET_EXT3 3
 #define F_SET_EXT4 4

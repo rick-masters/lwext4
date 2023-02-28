@@ -249,7 +249,11 @@ static void fill_sb(struct fs_aux_info *aux_info, struct ext4_mkfs_info *info)
 	sb->last_check_time = to_le32(0);
 	sb->check_interval = to_le32(0);
 	sb->creator_os = to_le32(EXT4_SUPERBLOCK_OS_LINUX);
-	sb->rev_level = to_le32(1);
+	if (info->feat_incompat) {
+		sb->rev_level = to_le32(1);
+	} else {
+		sb->rev_level = to_le32(0);
+	}
 	sb->def_resuid = to_le16(0);
 	sb->def_resgid = to_le16(0);
 
@@ -736,6 +740,11 @@ int ext4_mkfs(struct ext4_fs *fs, struct ext4_blockdev *bd,
 	info->inodes_per_group = compute_inodes_per_group(info);
 
 	switch (fs_type) {
+	case F_SET_EXT2_V0:
+		info->feat_compat = EXT2_SUPPORTED_FCOM;
+		info->feat_ro_compat = EXT2_SUPPORTED_FRO_COM;
+		info->feat_incompat = 0x0000;
+		break;
 	case F_SET_EXT2:
 		info->feat_compat = EXT2_SUPPORTED_FCOM;
 		info->feat_ro_compat = EXT2_SUPPORTED_FRO_COM;
